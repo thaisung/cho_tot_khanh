@@ -11,6 +11,7 @@ class Category_Serializer(serializers.ModelSerializer):
 	class Meta:
 		model=Category
 		fields='__all__'
+		ref_name = 'A2Category'
 		
 class Interior_condition_Serializer(serializers.ModelSerializer):
 	class Meta:

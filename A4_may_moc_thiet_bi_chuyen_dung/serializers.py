@@ -11,6 +11,7 @@ class Usage_status_Serializer(serializers.ModelSerializer):
 	class Meta:
 		model=Usage_status
 		fields='__all__'
+		ref_name = 'A4UsageStatus'
 
 class Seller_information_Serializer(serializers.ModelSerializer):
 	class Meta:

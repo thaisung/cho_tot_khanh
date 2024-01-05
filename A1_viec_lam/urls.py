@@ -42,8 +42,8 @@ urlpatterns = [
     path('items/', Job_ListCreateAPIView.as_view()),
     path('items/<int:pk>/', Job_RetrieveUpdateDestroyAPIView.as_view()),
 
-    path('items-image/', Job_image_ListCreateAPIView.as_view()),
-    path('items-image/<int:pk>/', Job_image_RetrieveUpdateDestroyAPIView.as_view()),
+    # path('items-image/', Job_image_ListCreateAPIView.as_view()),
+    # path('items-image/<int:pk>/', Job_image_RetrieveUpdateDestroyAPIView.as_view()),
 
     path('swagger<str:format>', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

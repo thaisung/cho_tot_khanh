@@ -13,6 +13,6 @@ urlpatterns = [
     path('items/',Items_ListCreateAPIView.as_view()),
     path('items/<int:pk>/', Items_RetrieveUpdateDestroyAPIView.as_view()),
 
-    path('items-image/', Items_image_ListCreateAPIView.as_view()),
-    path('items-image/<int:pk>/', Items_image_RetrieveUpdateDestroyAPIView.as_view()),
+    # path('items-image/', Items_image_ListCreateAPIView.as_view()),
+    # path('items-image/<int:pk>/', Items_image_RetrieveUpdateDestroyAPIView.as_view()),
 ]
