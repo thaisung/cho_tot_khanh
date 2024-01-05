@@ -9,7 +9,7 @@ urlpatterns = [
 
     path('users/', User_ListCreateView.as_view()),
     path('users/<int:pk>/', User_RetrieveUpdateDeleteView.as_view()),
-
+    
     path('location/', Location_ListCreateAPIView.as_view()),
     path('location/<int:pk>/', Location_RetrieveUpdateDestroyAPIView.as_view()),
 

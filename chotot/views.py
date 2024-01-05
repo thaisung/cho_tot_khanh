@@ -17,8 +17,31 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.exceptions import PermissionDenied
+from rest_framework import exceptions
+from rest_framework.exceptions import AuthenticationFailed
+
+@api_view(['GET'])
+def get_user_info(request):
+    try:
+        # Kiểm tra xác thực bằng token
+        if not request.auth or not IsAuthenticated().has_permission(request, None):
+            raise AuthenticationFailed(detail='Thông tin xác thực không chính xác', code='token_not_valid')
+
+        # Logic của view
+        user = User_Serializer(request.user).data
+        data = {'status': status.HTTP_200_OK, 'message': 'Lấy thông tin thành công', 'data': user}
+        return Response(data, status=status.HTTP_200_OK)
+    except AuthenticationFailed as e:
+        # Xử lý lỗi xác thực không thành công
+        detail = 'Thông tin xác thực không chính xác' if not e.detail else e.detail
+        data = {'status': status.HTTP_401_UNAUTHORIZED, 'error_message': detail}
+        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as e:
+        data = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': 'Lấy thông tin thất bại'}
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):

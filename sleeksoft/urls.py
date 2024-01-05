@@ -44,6 +44,7 @@ urlpatterns = [
     path('api/token/', CustomTokenObtainPairView.as_view()),
     path('api/token/refresh/', TokenRefreshView.as_view()),
     path('api/token/blacklist/', TokenBlacklistView.as_view()),
+    path('api/user-information/',get_user_info),
     
     path('', include('chotot.urls')),
     # path('auth/', include('social_django.urls', namespace='social')),
