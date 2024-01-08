@@ -10,16 +10,16 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('id','email', 'username',)
     search_fields = ('email', 'username',)
 
-    # fieldsets = BaseUserAdmin.fieldsets
-    # fieldsets[0][1]['fields'] = fieldsets[0][1]['fields'] + (
-    #     'Money','Total_recharge_money','Total_amount_deducted','Avatar','OTP','Two_factor_authentication'
-    # )
+    fieldsets = BaseUserAdmin.fieldsets
+    fieldsets[0][1]['fields'] = fieldsets[0][1]['fields'] + (
+        'avatar',
+    )
 
-    # add_fieldsets = (
-    #     (None, {
-    #         'classes': ('wide',),
-    #         'fields': ('email','username', 'password1', 'password2','Avatar')}
-    #     ),
-    # )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email','username', 'password1', 'password2','avatar')}
+        ),
+    )
 admin.site.register(User,UserAdmin)
 admin.site.unregister(auth.models.Group)
