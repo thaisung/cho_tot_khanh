@@ -50,6 +50,12 @@ INSTALLED_APPS = [
     'A3_tu_lanh_may_lanh_may_giat',
     'A4_may_moc_thiet_bi_chuyen_dung',
     'A5_taxi',
+    'B1_xe_co',
+    'B2_do_dien_tu',
+    'B3_dich_vu',
+    'B4_do_gia_dung_noi_that',
+    'B5_cua_hang_viet',
+    'B6_chuc_nang_huy',
 ]
 
 MIDDLEWARE = [

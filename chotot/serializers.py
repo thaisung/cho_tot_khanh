@@ -38,3 +38,8 @@ class Location_Serializer(serializers.ModelSerializer):
 # 		model=Address
 # 		fields='__all__'
 # 		depth = 1
+		
+class ParentCategory_Serializer(serializers.ModelSerializer):
+	class Meta:
+		model=ParentCategory
+		fields='__all__'

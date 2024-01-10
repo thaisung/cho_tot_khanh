@@ -71,4 +71,13 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
+    #huy
+    path('vehicle/', include('B1_xe_co.urls')),
+    path('ElectronicDevice/', include('B2_do_dien_tu.urls')),
+    path('service/', include('B3_dich_vu.urls')),
+    path('home-appliance/', include('B4_do_gia_dung_noi_that.urls')),
+    path('shop-viet/', include('B5_cua_hang_viet.urls')),
+    path('b6-all/', include('B6_chuc_nang_huy.urls')),
+    # end huy
+
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
