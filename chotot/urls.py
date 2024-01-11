@@ -16,8 +16,7 @@ urlpatterns = [
     path('location/address/', Address_ListCreateAPIView.as_view()),
     path('location/address/<int:pk>/', Address_RetrieveUpdateDestroyAPIView.as_view()),
 
-    path('parentCategory/', ParentCategory_ListCreateAPIView.as_view()),
-    path('parentCategory/<int:pk>/', ParentCategory_RetrieveUpdateDestroyAPIView.as_view()),
+
 
 
 ]

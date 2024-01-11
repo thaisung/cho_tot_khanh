@@ -15,7 +15,7 @@ from rest_framework.permissions import BasePermission
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import authentication_classes, permission_classes
 
-from chotot.models import *
+# from chotot.models import *
 
 import os
 
@@ -46,11 +46,13 @@ class Category_ListCreateAPIView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         
         if serializer.is_valid():
-            location_id = request.data.get('ParentCategory')
+            serializer.save()
+
+            # location_id = request.data.get('ParentCategory')
               
-            ParentCatego = ParentCategory.objects.get(pk=location_id)
-            # breakpoint()
-            item_instance = serializer.save(ParentCategory=ParentCatego)
+            # ParentCatego = ParentCategory.objects.get(pk=location_id)
+            # # breakpoint()
+            # item_instance = serializer.save(ParentCategory=ParentCatego)
                                             
             data = {'status': status.HTTP_201_CREATED, 'message': 'Registered successfully', 'data': serializer.data}
             return Response(data, status=status.HTTP_201_CREATED)

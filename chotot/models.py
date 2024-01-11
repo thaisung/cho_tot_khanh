@@ -56,14 +56,3 @@ class Address(models.Model):
     def __str__(self):	
         return str(self.Name)
     
-class ParentCategory(models.Model):
-    class Meta:
-        ordering = ["id"]
-        verbose_name_plural = "3 - Danh mục cha"
-
-    Name = models.CharField('Tên Danh mục',max_length=100, null=True, blank=True)
-    Url = models.CharField('Đường dẫn',max_length=100, null=True, blank=True)
-    Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
-    Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)
-    def __str__(self):	
-        return str(self.Name)

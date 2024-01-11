@@ -44,10 +44,12 @@ class Category_ListCreateAPIView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            location_id = request.data.get('ParentCategory')
-            ParentCatego = ParentCategory.objects.get(pk=location_id)
-            # breakpoint()
-            item_instance = serializer.save(ParentCategory=ParentCatego)
+            serializer.save()
+
+            # location_id = request.data.get('ParentCategory')
+            # ParentCatego = ParentCategory.objects.get(pk=location_id)
+            # # breakpoint()
+            # item_instance = serializer.save(ParentCategory=ParentCatego)
             data = {'status': status.HTTP_201_CREATED, 'message': 'Registered successfully', 'data': serializer.data}
             return Response(data, status=status.HTTP_201_CREATED)
         else:

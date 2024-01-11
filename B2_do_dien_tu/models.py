@@ -16,7 +16,7 @@ class Category(models.Model):
         verbose_name_plural = "1 - Danh mục"
     Name = models.CharField('Tên Danh mục',max_length=100, null=True, blank=True)
     Url = models.CharField('Đường dẫn',max_length=100, null=True, blank=True)
-    ParentCategory = models.ForeignKey(ParentCategory, on_delete=models.CASCADE, related_name='Parent_Category_B2',verbose_name='Danh mục cha')
+    # ParentCategory = models.ForeignKey(ParentCategory, on_delete=models.CASCADE, related_name='Parent_Category_B2',verbose_name='Danh mục cha')
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)
     def __str__(self):	
