@@ -45,7 +45,7 @@ class B3Items_Serializer(serializers.ModelSerializer):
     Guarantee = B3GuaranteeSerializer(read_only=True)
 
     class Meta:
-        model = Items
+        model = ItemsB3
         fields = '__all__'
         extra_kwargs = {
             'Location': {'write_only': True},  # không xuất hiện đầu ra trong api

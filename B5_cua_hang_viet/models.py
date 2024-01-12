@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from chotot.models import User
 from chotot.models import Location,Address
-from chotot.serializers import *
+# from chotot.serializers import *
 
 def validate_file_size(value):
     max_size = 50 * 1024 * 1024  # 50 megabytes
@@ -16,7 +16,7 @@ class Category(models.Model):
         verbose_name_plural = "1 - Danh mục"
     Name = models.CharField('Tên Danh mục',max_length=100, null=True, blank=True)
     Url = models.CharField('Đường dẫn',max_length=100, null=True, blank=True)
-    ParentCategory = models.ForeignKey(ParentCategory, on_delete=models.CASCADE, related_name='Parent_Category_B5',verbose_name='Danh mục cha')
+    # ParentCategory = models.ForeignKey(ParentCategory, on_delete=models.CASCADE, related_name='Parent_Category_B5',verbose_name='Danh mục cha')
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)
     def __str__(self):	
@@ -33,7 +33,7 @@ class Seller_information(models.Model):
     def __str__(self):	
         return str(self.Name)
         
-class Items(models.Model):
+class ItemsB5(models.Model):
     class Meta:
         ordering = ["id"]
         verbose_name_plural = "3 - Sản phẩm shop việt"
@@ -60,7 +60,7 @@ class Items_image(models.Model):
     class Meta:
         ordering = ["id"]
         verbose_name_plural = "4 - Ảnh Sản phẩm"
-    Items = models.ForeignKey(Items, on_delete=models.CASCADE, related_name='Items_image_Items_B5')
+    Items = models.ForeignKey(ItemsB5, on_delete=models.CASCADE, related_name='Items_image_Items_B5')
     Image = models.ImageField(upload_to='B5/Items_image')
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)

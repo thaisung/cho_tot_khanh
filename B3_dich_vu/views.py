@@ -14,7 +14,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import BasePermission
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import authentication_classes, permission_classes
-from chotot.models import *
+# from chotot.models import *
 
 import os
 
@@ -44,10 +44,12 @@ class Category_ListCreateAPIView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            location_id = request.data.get('ParentCategory')
-            ParentCatego = ParentCategory.objects.get(pk=location_id)
-            # breakpoint()
-            item_instance = serializer.save(ParentCategory=ParentCatego)
+            serializer.save()
+
+            # location_id = request.data.get('ParentCategory')
+            # ParentCatego = ParentCategory.objects.get(pk=location_id)
+            # # breakpoint()
+            # item_instance = serializer.save(ParentCategory=ParentCatego)
             data = {'status': status.HTTP_201_CREATED, 'message': 'Registered successfully', 'data': serializer.data}
             return Response(data, status=status.HTTP_201_CREATED)
         else:
@@ -284,7 +286,7 @@ class Items_Pagination(PageNumberPagination):
     max_page_size = 100
 
 class Items_ListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Items.objects.all()
+    queryset = ItemsB3.objects.all()
     serializer_class = B3Items_Serializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['id','User__username','Map','Location__Name','Address__Name','Category__Name','Usage_status__Name',
@@ -342,7 +344,7 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 class Items_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Items.objects.all()
+    queryset = ItemsB3.objects.all()
     serializer_class = B3Items_Serializer
     def get_permissions(self):
         if self.request.method in ['GET','PUT','PATCH','DELETE']:

@@ -94,7 +94,7 @@ class B2Items_Serializer(serializers.ModelSerializer):
     
     
     class Meta:
-        model = Items
+        model = ItemsB2
         fields = '__all__'
         extra_kwargs = {
             'Location': {'write_only': True},  # không xuất hiện đầu ra trong api

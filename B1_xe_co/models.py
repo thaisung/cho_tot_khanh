@@ -16,7 +16,7 @@ class Category(models.Model):
         verbose_name_plural = "1 - Danh mục"
     Name = models.CharField('Tên Danh mục',max_length=100, null=True, blank=True)
     Url = models.CharField('Đường dẫn',max_length=100, null=True, blank=True)
-    ParentCategory = models.ForeignKey(ParentCategory, on_delete=models.CASCADE, related_name='Parent_Category_B1',verbose_name='Danh mục cha')
+    # ParentCategory = models.ForeignKey(ParentCategory, on_delete=models.CASCADE, related_name='Parent_Category_B1',verbose_name='Danh mục cha')
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)
     def __str__(self):	
@@ -122,7 +122,7 @@ class Capacity(models.Model):
         return str(self.Name)
 
 
-class Items(models.Model):
+class ItemsB1(models.Model):
     class Meta:
         ordering = ["id"]
         verbose_name_plural = "11 - Sản phẩm bán xe cộ"
@@ -157,7 +157,7 @@ class Items_image(models.Model):
     class Meta:
         ordering = ["id"]
         verbose_name_plural = "12 - Ảnh Sản phẩm xe cộ"
-    Items = models.ForeignKey(Items, on_delete=models.CASCADE, related_name='Items_image_Items_B1')
+    Items = models.ForeignKey(ItemsB1, on_delete=models.CASCADE, related_name='Items_image_Items_B1')
     Image = models.ImageField(upload_to='B1/Items_image')
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)
