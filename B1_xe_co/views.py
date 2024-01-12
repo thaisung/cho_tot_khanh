@@ -14,6 +14,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import BasePermission
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import authentication_classes, permission_classes
+from B6_chuc_nang_huy.models import *
+from django.core.mail import send_mail
 
 # from chotot.models import *
 
@@ -743,6 +745,21 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
             for image_data in images_A3_data:
                 Items_image.objects.create(Items=item_instance, Image=image_data)
 
+             # Lấy ra tất cả các đối tượng Follow mà request.user đang theo dõi
+            user_followers = Follow.objects.filter(watching=request.user)
+            followers_users = user_followers.values_list('followers', flat=True)
+            followers = User.objects.filter(pk__in=followers_users)
+            for follower in followers:
+                content = f"{request.user.username} người bạn theo dõi vừa đăng sản phẩm mới: {item_instance.Title}."
+                Notification.objects.create(user=follower,user_send=request.user ,content=content)
+                #thông báo mail
+                subject = 'Bạn có một thông báo mới từ CHỢ TỐT KHÁNH'
+                message = content
+                from_email = 'quanghuyqb2001@gmial.com'  # Điền địa chỉ email của bạn
+                ra = [follower.email]
+                # breakpoint()
+                send_mail(subject, message, from_email, ra)
+            
             data = {'status': status.HTTP_201_CREATED, 'message': 'Registered successfully', 'data': serializer.data}
             return Response(data, status=status.HTTP_201_CREATED)
         else:

@@ -22,6 +22,9 @@ urlpatterns = [
     path('follow/<int:pk>/', Follow_RetrieveUpdateDestroyAPIView.as_view()),
     path('review/',ReviewView_ListCreateAPIView.as_view()),
     path('review/<int:pk>/', ReviewView_RetrieveUpdateDestroyAPIView.as_view()),
+
+    path('notification/',Notification_ListCreateAPIView.as_view()),
+
     
 
 ]
