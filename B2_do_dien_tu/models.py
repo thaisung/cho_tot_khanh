@@ -143,7 +143,7 @@ class Seller_information(models.Model):
     def __str__(self):	
         return str(self.Name)
         
-class Items(models.Model):
+class ItemsB2(models.Model):
     class Meta:
         ordering = ["id"]
         verbose_name_plural = "13 - Sản phẩm bán xe cộ"
@@ -180,7 +180,7 @@ class Items_image(models.Model):
     class Meta:
         ordering = ["id"]
         verbose_name_plural = "12 - Ảnh Sản phẩm đồ điện tử"
-    Items = models.ForeignKey(Items, on_delete=models.CASCADE, related_name='Items_image_Items_B2')
+    Items = models.ForeignKey(ItemsB2, on_delete=models.CASCADE, related_name='Items_image_Items_B2')
     Image = models.ImageField(upload_to='B2/Items_image')
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)

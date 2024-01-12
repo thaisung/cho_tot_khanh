@@ -83,7 +83,7 @@ class B1Items_Serializer(serializers.ModelSerializer):
     Capacity = B1CapacitySerializer(read_only=True)
 
     class Meta:
-        model = Items
+        model = ItemsB1
         fields = '__all__'
         extra_kwargs = {
             'Location': {'write_only': True},  # không xuất hiện đầu ra trong api

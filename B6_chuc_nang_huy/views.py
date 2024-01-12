@@ -484,3 +484,5 @@ class Notification_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAP
         except Http404:
             data = {'status': status.HTTP_404_NOT_FOUND, 'message': 'No content found to delete'}
             return Response(data, status=status.HTTP_404_NOT_FOUND)
+
+            

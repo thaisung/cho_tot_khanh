@@ -16,6 +16,7 @@ urlpatterns = [
     path('location/address/', Address_ListCreateAPIView.as_view()),
     path('location/address/<int:pk>/', Address_RetrieveUpdateDestroyAPIView.as_view()),
 
+    path('list_home/', Home_ListAPIView.as_view()),
 
 
 

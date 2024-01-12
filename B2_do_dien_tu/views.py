@@ -788,7 +788,7 @@ class Items_Pagination(PageNumberPagination):
     max_page_size = 100
 
 class Items_ListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Items.objects.all()
+    queryset = ItemsB2.objects.all()
     serializer_class = B2Items_Serializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['id','User__username','Map','Location__Name','Address__Name','Category__Name','Usage_status__Name',
@@ -875,7 +875,7 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 class Items_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Items.objects.all()
+    queryset = ItemsB2.objects.all()
     serializer_class = B2Items_Serializer
     def get_permissions(self):
         if self.request.method in ['GET','PUT','PATCH','DELETE']:
