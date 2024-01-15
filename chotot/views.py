@@ -334,19 +334,92 @@ class Address_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
             data = {'status': status.HTTP_404_NOT_FOUND, 'message': 'No content found to delete'}
             return Response(data, status=status.HTTP_404_NOT_FOUND)
         
+
 class Home_ListAPIView(ListAPIView):
+    serializer_class = B1Items_Serializer  # Chỉ định lớp serializer
+
     def list(self, request, *args, **kwargs):
         models = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
 
-        data_list = sorted(
-            [B1Items_Serializer(model.objects.all().order_by('-Creation_time'), many=True).data for model in models],
-            key=lambda x: x[0]['Creation_time'],
-            reverse=True
-        )
-        if not data_list:
-            return Response({'status': status.HTTP_204_NO_CONTENT, 'message': 'No items found'}, status=status.HTTP_204_NO_CONTENT)
+        data_list = [
+            self.get_serializer(model.objects.all().order_by('-Creation_time'), many=True).data for model in models
+        ]
 
-        return Response({'status': status.HTTP_200_OK, 'message': 'Get the list of items successfully', 'data': data_list}, status=status.HTTP_200_OK)
+        # Kiểm tra xem có dữ liệu trong bất kỳ danh sách nào không
+        if not any(data_list):
+            return Response({'status': status.HTTP_204_NO_CONTENT, 'message': 'Not Found'}, status=status.HTTP_204_NO_CONTENT)
 
+        # Gộp danh sách các danh sách con
+        flattened_data = [item for sublist in data_list for item in sublist]
 
-    
+        # Kiểm tra xem có dữ liệu trong danh sách gộp không
+        if not flattened_data:
+            return Response({'status': status.HTTP_204_NO_CONTENT, 'message': 'Not Found'}, status=status.HTTP_204_NO_CONTENT)
+
+        # Sắp xếp danh sách gộp dựa trên 'Creation_time' của phần tử đầu tiên
+        sorted_data = sorted(flattened_data, key=lambda x: x['Creation_time'], reverse=True)
+
+        return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_data}, status=status.HTTP_200_OK)
+
+class Parent_Category_ListCreateAPIView(generics.ListCreateAPIView):
+    queryset = ParentCategory.objects.all()
+    serializer_class = ParentCategory_Serializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['id','Name']
+    search_fields = ['id','Name']
+    # def get_permissions(self):
+    #     if self.request.method == 'GET':
+    #         return []
+    #     elif self.request.method == 'POST':
+    #         return [IsAuthenticated(), IsAdminUser()]
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        data = {'status': status.HTTP_200_OK, 'message': 'Get the list of Users successfully', 'data': response.data}
+        return Response(data, status=status.HTTP_200_OK)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            data = {'status': status.HTTP_201_CREATED, 'message': 'Registered successfully', 'data': serializer.data}
+            return Response(data, status=status.HTTP_201_CREATED)
+        else:
+            data = {'status': status.HTTP_400_BAD_REQUEST,'message':'Registration failed', 'error': serializer.errors}
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
+class Parent_Category_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ParentCategory.objects.all()
+    serializer_class = ParentCategory_Serializer
+    # def get_permissions(self):
+    #     if self.request.method == 'GET':
+    #         return []
+    #     elif self.request.method in ['PUT','PATCH','DELETE']:
+    #         return [IsAuthenticated(), IsAdminUser()]
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            serializer = self.get_serializer(instance)
+            data = {'status': status.HTTP_200_OK, 'message': 'Get detailed record successfully', 'data': serializer.data}
+            return Response(data)
+        except Http404:
+            data = {'status': status.HTTP_404_NOT_FOUND, 'message': 'Not Found'}
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        if serializer.is_valid():
+            serializer.save()
+            data = {'status': status.HTTP_200_OK, 'message': 'Update successful', 'data': serializer.data}
+            return Response(data,status=status.HTTP_200_OK)
+        else:
+            data = {'status': status.HTTP_400_BAD_REQUEST, 'message': 'Update failed', 'error': serializer.errors}
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+            data = {'status': status.HTTP_200_OK, 'message': 'Deleted successfully'}
+            return Response(data, status=status.HTTP_200_OK)
+        except Http404:
+            data = {'status': status.HTTP_404_NOT_FOUND, 'message': 'No content found to delete'}
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
