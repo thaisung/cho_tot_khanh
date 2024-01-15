@@ -268,7 +268,9 @@ class Follow_ListCreateAPIView(generics.ListCreateAPIView):
             # Gửi thông báo qua email
             subject = 'Bạn có một thông báo mới'
             message = content
-            from_email = 'quanghuyqb2001@gmial.com'  # Điền địa chỉ email của bạn
+            # from_email = 'quanghuyqb2001@gmial.com'  # Điền địa chỉ email của bạn
+            from_email = f'khanh skyshop'
+
             recipient_list = [userr.email]
 
             send_mail(subject, message, from_email, recipient_list)

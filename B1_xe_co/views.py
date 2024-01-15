@@ -17,7 +17,8 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from B6_chuc_nang_huy.models import *
 from django.core.mail import send_mail
 
-# from chotot.models import *
+
+from chotot.models import *
 
 import os
 
@@ -35,6 +36,7 @@ class Category_ListCreateAPIView(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['id','Name']
     search_fields = ['id','Name']
+
     def get_permissions(self):
         if self.request.method == 'GET':
             return []
@@ -44,18 +46,15 @@ class Category_ListCreateAPIView(generics.ListCreateAPIView):
         response = super().list(request, *args, **kwargs)
         data = {'status': status.HTTP_200_OK, 'message': 'Get the list of Users successfully', 'data': response.data}
         return Response(data, status=status.HTTP_200_OK)
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        
         if serializer.is_valid():
-            serializer.save()
-
-            # location_id = request.data.get('ParentCategory')
-              
-            # ParentCatego = ParentCategory.objects.get(pk=location_id)
-            # # breakpoint()
-            # item_instance = serializer.save(ParentCategory=ParentCatego)
-                                            
+            # breakpoint()
+            ParentCategory_id = request.data.get('ParentCategory')
+            ParentCatego = ParentCategory.objects.get(pk=ParentCategory_id)
+            item_instance = serializer.save(ParentCategory=ParentCatego)
+            serializer.save()                           
             data = {'status': status.HTTP_201_CREATED, 'message': 'Registered successfully', 'data': serializer.data}
             return Response(data, status=status.HTTP_201_CREATED)
         else:
@@ -745,6 +744,7 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
             for image_data in images_A3_data:
                 Items_image.objects.create(Items=item_instance, Image=image_data)
 
+            # if item_instance.status == 2:
              # Lấy ra tất cả các đối tượng Follow mà request.user đang theo dõi
             user_followers = Follow.objects.filter(watching=request.user)
             followers_users = user_followers.values_list('followers', flat=True)
@@ -756,9 +756,9 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
                 subject = 'Bạn có một thông báo mới từ CHỢ TỐT KHÁNH'
                 message = content
                 from_email = 'quanghuyqb2001@gmial.com'  # Điền địa chỉ email của bạn
-                ra = [follower.email]
+                recipient_list = [follower.email]
                 # breakpoint()
-                send_mail(subject, message, from_email, ra)
+                send_mail(subject, message, from_email, recipient_list)
             
             data = {'status': status.HTTP_201_CREATED, 'message': 'Registered successfully', 'data': serializer.data}
             return Response(data, status=status.HTTP_201_CREATED)
