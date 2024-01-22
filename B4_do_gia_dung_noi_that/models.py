@@ -17,6 +17,10 @@ class Category(models.Model):
     Name = models.CharField('Tên Danh mục',max_length=100, null=True, blank=True)
     Url = models.CharField('Đường dẫn',max_length=100, null=True, blank=True)
     # ParentCategory = models.ForeignKey(ParentCategory, on_delete=models.CASCADE, related_name='Parent_Category_B4',verbose_name='Danh mục cha')
+    key_category = {
+        "COMMON-FURNITURE-APPLIANCES": "COMMON-FURNITURE-APPLIANCES" 
+    }
+    key = models.CharField('Key', choices=key_category.items(), max_length=50)
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)
     def __str__(self):	
