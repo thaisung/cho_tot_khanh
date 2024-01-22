@@ -337,7 +337,9 @@ class Address_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
 
 class Home_ListAPIView(ListAPIView):
     serializer_class = B1Items_Serializer  # Chỉ định lớp serializer
-
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['User__username']
+    
     def list(self, request, *args, **kwargs):
         models = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
 

@@ -319,5 +319,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'quanghuyqb2001@gmail.com'  # Thay thế bằng địa chỉ email của bạn
-EMAIL_HOST_PASSWORD = 'pged pfwz qfzf ifzi'  # Thay thế bằng mật khẩu email của bạn
+# EMAIL_HOST_USER = 'quanghuyqb2001@gmail.com'  # Thay thế bằng địa chỉ email của bạn
+# EMAIL_HOST_PASSWORD = 'pged pfwz qfzf ifzi'  # Thay thế bằng mật khẩu email của bạn
