@@ -18,10 +18,10 @@ class Category(models.Model):
     Url = models.CharField('Đường dẫn',max_length=100, null=True, blank=True)
     # ParentCategory = models.ForeignKey(ParentCategory, on_delete=models.CASCADE, related_name='Parent_Category_B2',verbose_name='Danh mục cha')
     key_category = {
-        "DIENTHOAI": "DIENTHOAI",
+        "PHONE": "PHONE",
         "LAPTOP": "LAPTOP",
-        "MAYTINHBANG": "MAYTINHBANG",
-        "MAYTINHDEBAN": "MAYTINHDEBAN",
+        "TABLET": "TABLET",
+        "DESKTOP": "DESKTOP",
         "COMMON-ELECTRONICE-DEVICE": "COMMON-ELECTRONICE-DEVICE",
     }
     key = models.CharField('Key', choices=key_category.items(), max_length=50)
