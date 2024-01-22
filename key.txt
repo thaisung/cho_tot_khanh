@@ -1,0 +1,44 @@
+Việc làm  - (Chỉ có danh mục lớn duy nhất)
+
+
+Nhà tốt :
+    phòng trọ, ký túc xá  : "MOTEL-ROOM-DORMITORY"
+    nhà nguyên căn: "WHOLE-HOUSE",
+    mặt bằng kinh doanh: "BUSINESS-PREMISES"
+
+
+Tủ lạnh, máy lạnh, máy giặt:
+    Tủ lạnh: "FRIDGE"
+    Máy lạnh, điều hòa: "AIR-CONDITIONING-AIR-CONDITIONING"
+    Máy giặt: "WASHING MACHINE",
+
+
+Máy móc thiết bị chuyên dụng  - (Chỉ có danh mục lớn duy nhất)
+
+
+Taxi - (Chỉ có danh mục lớn duy nhất)
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+
+Xe cộ :
+    ô tô  : "CAR"
+    xe máy: "MOTORBIKE",
+    xe điện, xe đạp: "COMMON-VEHICLE"
+
+
+Đồ điện tử :
+    điện thoại  : "PHONE"
+    đồng hồ: "WHOLE-HOUSE",
+    laptop: "LAPTOP"
+    máy tính để bàn 
+    máy tính bảng 
+    tai nghe
+    phụ kiện ,màn hình
+    loa :
+
+
+
+
+
