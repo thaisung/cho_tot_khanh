@@ -9,7 +9,7 @@ from chotot.serializers import *
 
 class B1CategorySerializer(serializers.ModelSerializer):
     # Sử dụng ParentCategory_Serializer cho trường ParentCategory
-    ParentCategory = ParentCategory_Serializer(read_only=True)
+    # ParentCategory = ParentCategory_Serializer(read_only=True)
 
     class Meta:
         model = Category
