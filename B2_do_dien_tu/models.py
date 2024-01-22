@@ -22,9 +22,9 @@ class Category(models.Model):
         "LAPTOP": "LAPTOP",
         "MAYTINHBANG": "MAYTINHBANG",
         "MAYTINHDEBAN": "MAYTINHDEBAN",
-        "CHUNG": "CHUNG",
+        "COMMON-ELECTRONICE-DEVICE": "COMMON-ELECTRONICE-DEVICE",
     }
-    key = models.CharField('Key', choices=key_category.items(), max_length=20)
+    key = models.CharField('Key', choices=key_category.items(), max_length=50)
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)
     def __str__(self):	
