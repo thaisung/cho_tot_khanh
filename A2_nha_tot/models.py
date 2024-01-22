@@ -16,6 +16,12 @@ class Category(models.Model):
         verbose_name_plural = "1 - Danh mục"
     Name = models.CharField('Tên Danh mục',max_length=100, null=True, blank=True)
     Url = models.CharField('Đường dẫn',max_length=100, null=True, blank=True)
+    key_category = {
+        "MOTEL-ROOM-DORMITORY": "MOTEL-ROOM-DORMITORY",
+        "WHOLE-HOUSE": "WHOLE-HOUSE",
+        "BUSINESS-PREMISES": "BUSINESS-PREMISES",
+    }
+    key = models.CharField('Key', choices=key_category.items(), max_length=50)
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)
     def __str__(self):	
