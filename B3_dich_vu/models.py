@@ -20,7 +20,7 @@ class Category(models.Model):
     key_category = {
         "COMMON-SERVICE": "COMMON-SERVICE" 
     }
-    key = models.CharField('Key', choices=key_category.items(), max_length=20)
+    keyForm =models.CharField('Key', choices=key_category.items(), max_length=20)
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
     Update_time = models.DateTimeField('Thời gian cập nhật',auto_now=True)
     def __str__(self):	
