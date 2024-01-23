@@ -25,20 +25,22 @@ Taxi - (Chỉ có danh mục lớn duy nhất)
 Xe cộ :
     ô tô  : "CAR"
     xe máy: "MOTORBIKE",
-    xe điện, xe đạp: "COMMON-VEHICLE"
+    mấy mục còn lại chung: "COMMON-VEHICLE"
 
 
 Đồ điện tử :
-    điện thoại  : "PHONE"
-    đồng hồ: "WHOLE-HOUSE",
-    laptop: "LAPTOP"
-    máy tính để bàn 
-    máy tính bảng 
-    tai nghe
-    phụ kiện ,màn hình
-    loa :
+    điện thoại  : "PHONE",
+    laptop: "LAPTOP",
+    máy tính để bàn: TABLET,
+    máy tính bảng: DESKTOP,
+    danh mục còn lại chung: COMMON-ELECTRONICE-DEVICE
 
 
+Dịch vụ:
+    danh mục chung: COMMON-SERVICE
 
+Đồ gia dụng nội thất 
+    danh mục chung: COMMON-FURNITURE-APPLIANCES
 
-
+Shop việt
+    danh mục chung: COMMON-VIETSHOP
