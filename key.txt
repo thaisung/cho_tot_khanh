@@ -10,7 +10,7 @@ Nhà tốt :
 Tủ lạnh, máy lạnh, máy giặt:
     Tủ lạnh: "FRIDGE"
     Máy lạnh, điều hòa: "AIR-CONDITIONING-AIR-CONDITIONING"
-    Máy giặt: "WASHING MACHINE",
+    Máy giặt: "WASHING-MACHINE",
 
 
 Máy móc thiết bị chuyên dụng  - (Chỉ có danh mục lớn duy nhất)

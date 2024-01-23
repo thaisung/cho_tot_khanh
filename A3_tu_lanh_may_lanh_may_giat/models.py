@@ -19,7 +19,7 @@ class Category(models.Model):
     key_category = {
         "FRIDGE": "FRIDGE",
         "AIR-CONDITIONING-AIR-CONDITIONING": "AIR-CONDITIONING-AIR-CONDITIONING",
-        "WASHING-MACHINE": "WASHING MACHINE",
+        "WASHING-MACHINE": "WASHING-MACHINE",
     }
     key = models.CharField('Key', choices=key_category.items(), max_length=50)
     Creation_time = models.DateTimeField('Thời gian tạo',auto_now_add=True)
