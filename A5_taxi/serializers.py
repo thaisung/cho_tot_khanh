@@ -31,6 +31,4 @@ class Items_Serializer(serializers.ModelSerializer):
 	class Meta:
 		model=Items
 		fields='__all__'
-		extra_kwargs = {
-            'Location': {'write_only': True}, #ko xuất hiện đầu ra trong api
-        }
+		
