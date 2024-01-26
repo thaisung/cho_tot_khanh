@@ -116,8 +116,8 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
     queryset = Items.objects.all()
     serializer_class = Items_Serializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['id','User__username','Map','Location__Name','Address__Name','Price','Posted_news__Name','Place_of_origin','Destination','Time_to_start_moving','Title','Detailed_description','Poster_information__Name']
-    search_fields = ['id','User__username','Map','Location__Name','Address__Name','Price','Posted_news__Name','Place_of_origin','Destination','Time_to_start_moving','Title','Detailed_description','Poster_information__Name']
+    filterset_fields = ['id','User__username','Map','Address__Name','Price','Posted_news__Name','Place_of_origin','Destination','Time_to_start_moving','Title','Detailed_description','Poster_information__Name']
+    search_fields = ['id','User__username','Map','Address__Name','Price','Posted_news__Name','Place_of_origin','Destination','Time_to_start_moving','Title','Detailed_description','Poster_information__Name']
     pagination_class = Items_Pagination
     def get_permissions(self):
         if self.request.method == 'GET':
@@ -134,19 +134,17 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             # Trích xuất các giá trị ID từ request.data
-            location_id = request.data.get('Location')
             address_id = request.data.get('Address')
             posted_news_id = request.data.get('Posted_news')
             poster_information_id = request.data.get('Poster_information')
 
             # Lấy bản ghi từ cơ sở dữ liệu
-            location = Location.objects.get(pk=location_id)
             address = Address.objects.get(pk=address_id)
             posted_news = Posted_news.objects.get(pk=posted_news_id)
             poster_information = Poster_information.objects.get(pk=poster_information_id)
 
             # Tạo instance của Job với các giá trị đã lấy được
-            item_instance = serializer.save(User=request.user, Location=location, Address=address,
+            item_instance = serializer.save(User=request.user,Address=address,
                                             Posted_news=posted_news,Poster_information=poster_information
                                             )
 
