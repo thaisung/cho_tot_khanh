@@ -335,33 +335,69 @@ class Address_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
             return Response(data, status=status.HTTP_404_NOT_FOUND)
         
 
-class Home_ListAPIView(ListAPIView):
-    serializer_class = B1Items_Serializer  # Chỉ định lớp serializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['User__username']
+# class Home_ListAPIView(ListAPIView):
+    # serializer_class = B1Items_Serializer  # Chỉ định lớp serializer
+    # filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    # filterset_fields = ['User__username']
     
+    # def list(self, request, *args, **kwargs):
+    #     models = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
+
+    #     data_list = [
+    #         self.get_serializer(model.objects.all().order_by('-Creation_time'), many=True).data for model in models
+    #     ]
+
+    #     # Kiểm tra xem có dữ liệu trong bất kỳ danh sách nào không
+    #     if not any(data_list):
+    #         return Response({'status': status.HTTP_204_NO_CONTENT, 'message': 'Not Found'}, status=status.HTTP_204_NO_CONTENT)
+
+    #     # Gộp danh sách các danh sách con
+    #     flattened_data = [item for sublist in data_list for item in sublist]
+
+    #     # Kiểm tra xem có dữ liệu trong danh sách gộp không
+    #     if not flattened_data:
+    #         return Response({'status': status.HTTP_204_NO_CONTENT, 'message': 'Not Found'}, status=status.HTTP_204_NO_CONTENT)
+
+    #     # Sắp xếp danh sách gộp dựa trên 'Creation_time' của phần tử đầu tiên
+    #     sorted_data = sorted(flattened_data, key=lambda x: x['Creation_time'], reverse=True)
+
+    #     return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_data}, status=status.HTTP_200_OK)
+
+class Home_ListAPIView(generics.ListCreateAPIView):
     def list(self, request, *args, **kwargs):
-        models = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
+        model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
+        model_data = []
 
-        data_list = [
-            self.get_serializer(model.objects.all().order_by('-Creation_time'), many=True).data for model in models
-        ]
+        for model_class in model_classes:
+            queryset = model_class.objects.all().order_by('-Creation_time')
+            serializer_class = get_serializer_class_for_model(model_class)
+            serializer = serializer_class(queryset, many=True)
+            model_data.extend(serializer.data)
 
-        # Kiểm tra xem có dữ liệu trong bất kỳ danh sách nào không
-        if not any(data_list):
-            return Response({'status': status.HTTP_204_NO_CONTENT, 'message': 'Not Found'}, status=status.HTTP_204_NO_CONTENT)
+        # Kiểm tra xem có dữ liệu trong danh sách không
+        if not model_data:
+            return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': model_data}, status=status.HTTP_200_OK)
 
-        # Gộp danh sách các danh sách con
-        flattened_data = [item for sublist in data_list for item in sublist]
-
-        # Kiểm tra xem có dữ liệu trong danh sách gộp không
-        if not flattened_data:
-            return Response({'status': status.HTTP_204_NO_CONTENT, 'message': 'Not Found'}, status=status.HTTP_204_NO_CONTENT)
-
-        # Sắp xếp danh sách gộp dựa trên 'Creation_time' của phần tử đầu tiên
-        sorted_data = sorted(flattened_data, key=lambda x: x['Creation_time'], reverse=True)
+        # Sắp xếp danh sách dựa trên 'Creation_time'
+        sorted_data = sorted(model_data, key=lambda x: x.get('Creation_time', 0), reverse=True)
 
         return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_data}, status=status.HTTP_200_OK)
+
+def get_serializer_class_for_model(model_class):
+    # Thêm logic để ánh xạ model_class với serializer_class tương ứng
+    if model_class == ItemsB1:
+        return B1Items_Serializer
+    elif model_class == ItemsB2:
+        return B2Items_Serializer
+    elif model_class == ItemsB3:
+        return B3Items_Serializer
+    elif model_class == ItemsB4:
+        return B4Items_Serializer
+    elif model_class == ItemsB5:
+        return B5Items_Serializer
+    else:
+        raise ValueError(f"No serializer found for model {model_class}")
+       
 
 # class Parent_Category_ListCreateAPIView(generics.ListCreateAPIView):
 #     queryset = ParentCategory.objects.all()

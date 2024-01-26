@@ -746,19 +746,19 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
 
             # if item_instance.status == 2:
              # Lấy ra tất cả các đối tượng Follow mà request.user đang theo dõi
-            user_followers = Follow.objects.filter(watching=request.user)
-            followers_users = user_followers.values_list('followers', flat=True)
-            followers = User.objects.filter(pk__in=followers_users)
-            for follower in followers:
-                content = f"{request.user.username} người bạn theo dõi vừa đăng sản phẩm mới: {item_instance.Title}."
-                Notification.objects.create(user=follower,user_send=request.user ,content=content)
-                #thông báo mail
-                subject = 'Bạn có một thông báo mới từ CHỢ TỐT KHÁNH'
-                message = content
-                from_email = 'quanghuyqb2001@gmial.com'  # Điền địa chỉ email của bạn
-                recipient_list = [follower.email]
-                # breakpoint()
-                send_mail(subject, message, from_email, recipient_list)
+            # user_followers = Follow.objects.filter(watching=request.user)
+            # followers_users = user_followers.values_list('followers', flat=True)
+            # followers = User.objects.filter(pk__in=followers_users)
+            # for follower in followers:
+            #     content = f"{request.user.username} người bạn theo dõi vừa đăng sản phẩm mới: {item_instance.Title}."
+            #     Notification.objects.create(user=follower,user_send=request.user ,content=content)
+            #     #thông báo mail
+            #     subject = 'Bạn có một thông báo mới từ CHỢ TỐT KHÁNH'
+            #     message = content
+            #     from_email = 'quanghuyqb2001@gmial.com'  # Điền địa chỉ email của bạn
+            #     recipient_list = [follower.email]
+            #     # breakpoint()
+            #     send_mail(subject, message, from_email, recipient_list)
             
             data = {'status': status.HTTP_201_CREATED, 'message': 'Registered successfully', 'data': serializer.data}
             return Response(data, status=status.HTTP_201_CREATED)
