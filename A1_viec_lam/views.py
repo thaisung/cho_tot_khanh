@@ -342,7 +342,7 @@ class Experience_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
             return Response(data, status=status.HTTP_404_NOT_FOUND)
 
 class Job_Pagination(PageNumberPagination):
-    page_size = 2  # Số lượng bản ghi trên mỗi trang
+    page_size = 5  # Số lượng bản ghi trên mỗi trang
     page_size_query_param = 'page_size'
     max_page_size = 100
 class Job_ListCreateAPIView(generics.ListCreateAPIView):

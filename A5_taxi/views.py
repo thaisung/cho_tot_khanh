@@ -109,7 +109,7 @@ class Poster_information_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDes
             return [IsAuthenticated(), IsAdminUser()]
         
 class Items_Pagination(PageNumberPagination):
-    page_size = 2  # Số lượng bản ghi trên mỗi trang
+    page_size = 5  # Số lượng bản ghi trên mỗi trang
     page_size_query_param = 'page_size'
     max_page_size = 100
 class Items_ListCreateAPIView(generics.ListCreateAPIView):
@@ -134,17 +134,15 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             # Trích xuất các giá trị ID từ request.data
-            address_id = request.data.get('Address')
             posted_news_id = request.data.get('Posted_news')
             poster_information_id = request.data.get('Poster_information')
 
             # Lấy bản ghi từ cơ sở dữ liệu
-            address = Address.objects.get(pk=address_id)
             posted_news = Posted_news.objects.get(pk=posted_news_id)
             poster_information = Poster_information.objects.get(pk=poster_information_id)
 
             # Tạo instance của Job với các giá trị đã lấy được
-            item_instance = serializer.save(User=request.user,Address=address,
+            item_instance = serializer.save(User=request.user,
                                             Posted_news=posted_news,Poster_information=poster_information
                                             )
 
