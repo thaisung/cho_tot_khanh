@@ -116,8 +116,8 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
     queryset = Items.objects.all()
     serializer_class = Items_Serializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['id','User__username','Map','Address__Name','Price','Posted_news__Name','Place_of_origin','Destination','Time_to_start_moving','Title','Detailed_description','Poster_information__Name']
-    search_fields = ['id','User__username','Map','Address__Name','Price','Posted_news__Name','Place_of_origin','Destination','Time_to_start_moving','Title','Detailed_description','Poster_information__Name']
+    filterset_fields = ['id','User__username','Map','Price','Posted_news__Name','Place_of_origin','Destination','Time_to_start_moving','Title','Detailed_description','Poster_information__Name']
+    search_fields = ['id','User__username','Map','Price','Posted_news__Name','Place_of_origin','Destination','Time_to_start_moving','Title','Detailed_description','Poster_information__Name']
     pagination_class = Items_Pagination
     def get_permissions(self):
         if self.request.method == 'GET':
