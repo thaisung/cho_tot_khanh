@@ -155,7 +155,7 @@ class Seller_information_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDes
             return Response(data, status=status.HTTP_404_NOT_FOUND)
 
 class Items_Pagination(PageNumberPagination):
-    page_size = 2  # Số lượng bản ghi trên mỗi trang
+    page_size = 10  # Số lượng bản ghi trên mỗi trang
     page_size_query_param = 'page_size'
     max_page_size = 100
 
