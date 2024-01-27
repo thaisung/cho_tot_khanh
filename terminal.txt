@@ -19,6 +19,7 @@ venv\Scripts\activate
 deactivate
 
 git push origin main
+git pull origin main
 
 
 python manage.py startapp chotot

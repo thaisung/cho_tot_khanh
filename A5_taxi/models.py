@@ -38,7 +38,6 @@ class Items(models.Model):
         verbose_name_plural = "4 - Sản phẩm bán"
     User = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Items_User_A5',null=True, blank=True)
     Map = models.CharField('Vị trí bản đồ',max_length=100, null=True, blank=True)
-    Address =  models.ForeignKey(Address, on_delete=models.CASCADE, related_name='Items_Address_A5',verbose_name='Địa chỉ',null=True, blank=True)
     Price = models.CharField('Giá',max_length=100, null=True, blank=True)
     Posted_news = models.ForeignKey(Posted_news, on_delete=models.CASCADE, related_name='Items_Posted_news_A5',verbose_name='Tin dăng',null=True, blank=True)
     Place_of_origin = models.CharField('Nơi xuất phát',max_length=100, null=True, blank=True)

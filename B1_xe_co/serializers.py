@@ -61,9 +61,14 @@ class B1CapacitySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class B1Items_image_Serializer(serializers.ModelSerializer):
-	class Meta:
-		model=Items_image
-		fields='__all__'
+    class Meta:
+        model=Items_image
+        fields='__all__'
+    def get_image_url(self, instance):
+        request = self.context.get('request', None)
+        if request and instance.image:
+            return request.build_absolute_uri(instance.image.url)
+        return None
 
 class B1Items_Serializer(serializers.ModelSerializer):
     User = User_Serializer(read_only=True)
