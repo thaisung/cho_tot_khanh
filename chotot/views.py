@@ -22,7 +22,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.exceptions import PermissionDenied
 from rest_framework import exceptions
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView,RetrieveAPIView
 
 from B1_xe_co.models import *
 from B1_xe_co.serializers import *
@@ -363,7 +363,8 @@ class Address_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
 
     #     return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_data}, status=status.HTTP_200_OK)
 
-class Home_ListAPIView(generics.ListCreateAPIView):
+class Home_ListAPIView(ListAPIView):
+
     def list(self, request, *args, **kwargs):
         model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
         model_data = []
@@ -383,6 +384,57 @@ class Home_ListAPIView(generics.ListCreateAPIView):
 
         return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_data}, status=status.HTTP_200_OK)
 
+class UserArticlesAPIView(ListAPIView):
+
+    def get(self, request, *args, **kwargs):
+        user_id = kwargs.get('user_id', None)
+
+        if not user_id:
+            return Response({'status': status.HTTP_400_BAD_REQUEST, 'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user_articles = []
+
+        for model_class in [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]:
+            queryset = model_class.objects.filter(User_id=user_id).order_by('-Creation_time')
+            serializer_class = get_serializer_class_for_model(model_class)
+            serializer = serializer_class(queryset, many=True)
+            user_articles.extend(serializer.data)
+
+        # Kiểm tra xem có dữ liệu trong danh sách không
+        if not user_articles:
+            return Response({'status': status.HTTP_200_OK, 'message': 'No articles found for the user', 'data': user_articles}, status=status.HTTP_200_OK)
+
+        # Sắp xếp danh sách dựa trên 'Creation_time'
+        sorted_user_articles = sorted(user_articles, key=lambda x: x.get('Creation_time', 0), reverse=True)
+
+        return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_user_articles}, status=status.HTTP_200_OK)
+
+class detaileArticlesAPIView(RetrieveAPIView):
+
+    def get(self, request, *args, **kwargs):
+        artice_id = kwargs.get('artice_id', None)
+        keyForm = kwargs.get('keyForm', None)
+
+        if not artice_id and keyForm:
+            return Response({'status': status.HTTP_400_BAD_REQUEST, 'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user_articles = []
+
+        for model_class in [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]:
+            queryset = model_class.objects.filter(id = artice_id, Category__keyForm=keyForm ).order_by('-Creation_time')
+            serializer_class = get_serializer_class_for_model(model_class)
+            serializer = serializer_class(queryset, many=True)
+            user_articles.extend(serializer.data)
+
+        # Kiểm tra xem có dữ liệu trong danh sách không
+        if not user_articles:
+            return Response({'status': status.HTTP_200_OK, 'message': 'No articles', 'data': user_articles}, status=status.HTTP_200_OK)
+
+        # Sắp xếp danh sách dựa trên 'Creation_time'
+        sorted_user_articles = sorted(user_articles, key=lambda x: x.get('Creation_time', 0), reverse=True)
+
+        return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_user_articles}, status=status.HTTP_200_OK)
+        
 def get_serializer_class_for_model(model_class):
     # Thêm logic để ánh xạ model_class với serializer_class tương ứng
     if model_class == ItemsB1:
