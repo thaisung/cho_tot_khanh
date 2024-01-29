@@ -59,7 +59,10 @@ INSTALLED_APPS = [
     'B3_dich_vu',
     'B4_do_gia_dung_noi_that',
     'B5_cua_hang_viet',
-    'B6_chuc_nang_huy',
+    'messenger',
+    'follow',
+    'review',
+    'notification',
 ]
 
 MIDDLEWARE = [
@@ -156,18 +159,18 @@ WSGI_APPLICATION = 'sleeksoft.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DJANGO_DB_NAME'),
-        'USER': os.getenv('DJANGO_DB_USER'),
-        'PASSWORD': os.getenv('DJANGO_DB_PASSWORD'),
-        'HOST': os.getenv('DJANGO_DB_HOST'),
-        'PORT': os.getenv('DJANGO_DB_PORT'),
-    }
-    # "default": {
-    #     "ENGINE": "django.db.backends.sqlite3",
-    #     "NAME": BASE_DIR / "db.sqlite3",
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': os.getenv('DJANGO_DB_NAME'),
+    #     'USER': os.getenv('DJANGO_DB_USER'),
+    #     'PASSWORD': os.getenv('DJANGO_DB_PASSWORD'),
+    #     'HOST': os.getenv('DJANGO_DB_HOST'),
+    #     'PORT': os.getenv('DJANGO_DB_PORT'),
     # }
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
 # DATABASES = {

@@ -77,7 +77,13 @@ urlpatterns = [
     path('service/', include('B3_dich_vu.urls')),
     path('home-appliance/', include('B4_do_gia_dung_noi_that.urls')),
     path('shop-viet/', include('B5_cua_hang_viet.urls')),
-    path('b6-all/', include('B6_chuc_nang_huy.urls')),
+    
+    path('messenger/', include('messenger.urls')),
+    path('follow/', include('follow.urls')),
+    path('review/', include('review.urls')),
+    path('notification/', include('notification.urls')),
+
+
     # end huy
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

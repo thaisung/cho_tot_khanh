@@ -14,7 +14,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import BasePermission
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import authentication_classes, permission_classes
-from B6_chuc_nang_huy.models import *
 from django.core.mail import send_mail
 
 
