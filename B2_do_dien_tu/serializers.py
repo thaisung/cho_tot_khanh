@@ -70,15 +70,25 @@ class B2SellerInformationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class B2Items_image_Serializer(serializers.ModelSerializer):
-    class Meta:
-        model=Items_image
-        fields='__all__'
-    def get_image_url(self, instance):
-        request = self.context.get('request', None)
-        if request and instance.image:
-            return request.build_absolute_uri(instance.image.url)
-        return None
+    # class Meta:
+    #     model=Items_image
+    #     fields='__all__'
+    # def get_image_url(self, instance):
+    #     request = self.context.get('request', None)
+    #     if request and instance.image:
+    #         return request.build_absolute_uri(instance.image.url)
+    #     return None
         
+    Image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Items_image
+        fields = '__all__'
+
+    def get_Image(self, instance):
+        if instance.Image:
+            return self.context['request'].build_absolute_uri(instance.Image.url)
+        return None
 class B2Items_Serializer(serializers.ModelSerializer):
     User = User_Serializer(read_only=True)
     images_A3 = B2Items_image_Serializer(many=True, read_only=True, source='Items_image_Items_B2')

@@ -153,7 +153,7 @@ class Seller_information(models.Model):
         
 class ItemsB2(models.Model):
     class Meta:
-        ordering = ["id"]
+        ordering = ["-id"]
         verbose_name_plural = "13 - Sản phẩm bán xe cộ"
     User = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Items_User_B2')
     Map = models.CharField('Vị trí bản đồ',max_length=100, null=True, blank=True)

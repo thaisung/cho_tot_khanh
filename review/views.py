@@ -56,7 +56,10 @@ class ReviewView_ListCreateAPIView(generics.ListCreateAPIView):
             # user = User.objects.get(pk=user_id)
             user = request.user
             user_seller = User.objects.get(pk=user_seller_id)
-
+            check = Review.objects.filter(Q(user=user) and Q(user_seller=user_seller))
+            if check:
+                data = {'status': status.HTTP_400_BAD_REQUEST, 'message': 'Bạn chỉ đánh giá được 1 lần', 'error': serializer.errors}
+                return Response(data, status=status.HTTP_400_BAD_REQUEST)
             serializer.validated_data['user'] = user
             serializer.validated_data['user_seller'] = user_seller
             
