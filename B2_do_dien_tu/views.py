@@ -904,7 +904,8 @@ class Items_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
             for image_data in images_A3_data:
                     Items_image.objects.create(Items=instance, Image=image_data)
         # Kiểm tra và xóa video cũ nếu có dữ liệu mới
-        if has_new_video and instance.Video.path:
+        if has_new_video and instance.Video and instance.Video.path:
+            print('instance.Video.path:', instance.Video.path)
             os.remove(instance.Video.path)
         # Cập nhật thông tin
         serializer = self.get_serializer(instance, data=request.data, partial=partial)

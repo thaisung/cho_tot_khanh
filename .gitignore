@@ -2,5 +2,8 @@
 debug.log
 .env
 *.sqlite3
-/upload
+/upload/**
+
+
+
 
