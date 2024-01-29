@@ -106,8 +106,10 @@ class Message_ListCreateAPIView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
-            sender_id = request.data.get('sender')
-            sender = User.objects.get(pk=sender_id)
+            # sender_id = request.data.get('sender') 
+            sender = request.user
+
+            # sender = User.objects.get(pk=sender_id)
 
             receiver_id = request.data.get('receiver')
             receiver = User.objects.get(pk=receiver_id)

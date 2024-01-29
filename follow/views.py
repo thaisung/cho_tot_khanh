@@ -51,10 +51,10 @@ class Follow_ListCreateAPIView(generics.ListCreateAPIView):
         serializer = FollowSerializer(data=request.data)  # Pass the request data to the serializer
         if serializer.is_valid():
             user_watching = request.data.get('watching')
-            followers = request.data.get('followers')
+            followers = request.user
             # breakpoint()
             watching = User.objects.get(pk=user_watching)
-            followers = User.objects.get(pk=followers)
+            # followers = User.objects.get(pk=followers)
 
             serializer.validated_data['watching'] = watching
             serializer.validated_data['followers'] = followers

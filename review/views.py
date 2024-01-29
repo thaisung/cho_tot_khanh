@@ -50,10 +50,11 @@ class ReviewView_ListCreateAPIView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = ReviewSerializer(data=request.data)  # Pass the request data to the serializer
         if serializer.is_valid():
-            user_id = request.data.get('user')
+            # user_id = request.data.get('user')
             user_seller_id = request.data.get('user_seller')
             # breakpoint()
-            user = User.objects.get(pk=user_id)
+            # user = User.objects.get(pk=user_id)
+            user = request.user
             user_seller = User.objects.get(pk=user_seller_id)
 
             serializer.validated_data['user'] = user
