@@ -55,7 +55,10 @@ class Follow_ListCreateAPIView(generics.ListCreateAPIView):
             # breakpoint()
             watching = User.objects.get(pk=user_watching)
             # followers = User.objects.get(pk=followers)
-
+            check = Follow.objects.filter(Q(followers=followers) and Q(watching=watching))
+            if check:
+                data = {'status': status.HTTP_400_BAD_REQUEST, 'message': 'Bạn đã theo dõi người này', 'error': serializer.errors}
+                return Response(data, status=status.HTTP_400_BAD_REQUEST)
             serializer.validated_data['watching'] = watching
             serializer.validated_data['followers'] = followers
 

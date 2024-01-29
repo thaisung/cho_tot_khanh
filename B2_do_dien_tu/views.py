@@ -808,6 +808,7 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
         response = super().list(request, *args, **kwargs)
         data = {'status': status.HTTP_200_OK, 'message': 'Get the list of Users successfully', 'data': response.data}
         return Response(data, status=status.HTTP_200_OK)
+        
     def create(self, request, *args, **kwargs):
         images_A3_data = request.data.pop('images_A3_data', [])
         serializer = self.get_serializer(data=request.data)

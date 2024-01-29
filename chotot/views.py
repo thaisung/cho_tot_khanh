@@ -362,6 +362,20 @@ class Address_RetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
     #     sorted_data = sorted(flattened_data, key=lambda x: x['Creation_time'], reverse=True)
 
     #     return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_data}, status=status.HTTP_200_OK)
+def get_serializer_class_for_model(model_class):
+    # Thêm logic để ánh xạ model_class với serializer_class tương ứng
+    if model_class == ItemsB1:
+        return B1Items_Serializer
+    elif model_class == ItemsB2:
+        return B2Items_Serializer
+    elif model_class == ItemsB3:
+        return B3Items_Serializer
+    elif model_class == ItemsB4:
+        return B4Items_Serializer
+    elif model_class == ItemsB5:
+        return B5Items_Serializer
+    else:
+        raise ValueError(f"No serializer found for model {model_class}")
 
 class Home_ListAPIView(ListAPIView):
 
@@ -372,7 +386,9 @@ class Home_ListAPIView(ListAPIView):
         for model_class in model_classes:
             queryset = model_class.objects.all().order_by('-Creation_time')
             serializer_class = get_serializer_class_for_model(model_class)
-            serializer = serializer_class(queryset, many=True)
+            
+            # Truyền context trong khởi tạo serializer
+            serializer = serializer_class(queryset, many=True, context={'request': self.request})
             model_data.extend(serializer.data)
 
         # Kiểm tra xem có dữ liệu trong danh sách không
@@ -435,20 +451,7 @@ class detaileArticlesAPIView(RetrieveAPIView):
 
         return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_user_articles}, status=status.HTTP_200_OK)
         
-def get_serializer_class_for_model(model_class):
-    # Thêm logic để ánh xạ model_class với serializer_class tương ứng
-    if model_class == ItemsB1:
-        return B1Items_Serializer
-    elif model_class == ItemsB2:
-        return B2Items_Serializer
-    elif model_class == ItemsB3:
-        return B3Items_Serializer
-    elif model_class == ItemsB4:
-        return B4Items_Serializer
-    elif model_class == ItemsB5:
-        return B5Items_Serializer
-    else:
-        raise ValueError(f"No serializer found for model {model_class}")
+
        
 
 # class Parent_Category_ListCreateAPIView(generics.ListCreateAPIView):
