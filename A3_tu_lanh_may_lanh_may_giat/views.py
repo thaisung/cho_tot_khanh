@@ -496,7 +496,6 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
             volume_id = request.data.get('Volume')
             wattage_id = request.data.get('Wattage')
             washing_volume_id = request.data.get('Washing_volume')
-            print(' washing_volume_id:', washing_volume_id)
 
             # Lấy bản ghi từ cơ sở dữ liệu
             location = Location.objects.get(pk=location_id)
@@ -505,10 +504,22 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
             usage_status = Usage_status.objects.get(pk=usage_status_id)
             seller_information = Seller_information.objects.get(pk=seller_information_id)
             guarantee = Guarantee.objects.get(pk=guarantee_id)
-            volume = Volume.objects.get(pk=volume_id)
-            wattage = Wattage.objects.get(pk=wattage_id)
-            washing_volume = Washing_volume.objects.get(pk=washing_volume_id)
 
+            if volume_id:
+                volume = Volume.objects.get(pk=volume_id)
+            else:
+                volume = None
+
+            if wattage_id:
+                wattage = Wattage.objects.get(pk=wattage_id)
+            else:
+                wattage = None
+
+            if washing_volume_id:
+                washing_volume = Washing_volume.objects.get(pk=washing_volume_id)
+            else:
+                washing_volume = None
+            
             # Tạo instance của Job với các giá trị đã lấy được
             item_instance = serializer.save(User=request.user, Location=location, Address=address,
                                             Category=category,Usage_status=usage_status,Seller_information=seller_information,
