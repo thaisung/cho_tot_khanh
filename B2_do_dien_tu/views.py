@@ -812,7 +812,7 @@ class Items_ListCreateAPIView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         images_A3_data = request.data.pop('images_A3_data', [])
         serializer = self.get_serializer(data=request.data)
-        
+      
         if serializer.is_valid():
             # Trích xuất các giá trị ID từ request.data
             location_id = request.data.get('Location')

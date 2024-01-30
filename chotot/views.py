@@ -401,56 +401,62 @@ class Home_ListAPIView(ListAPIView):
         return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_data}, status=status.HTTP_200_OK)
 
 class UserArticlesAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
-    def get(self, request, *args, **kwargs):
-        user_id = kwargs.get('user_id', None)
+    def list(self, request, *args, **kwargs):
+        model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
+        model_data = []
 
-        if not user_id:
-            return Response({'status': status.HTTP_400_BAD_REQUEST, 'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+        user_id = request.user.id
 
-        user_articles = []
-
-        for model_class in [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]:
-            queryset = model_class.objects.filter(User_id=user_id).order_by('-Creation_time')
+        for model_class in model_classes:
+            queryset = model_class.objects.filter(User=user_id).order_by('-Creation_time')
             serializer_class = get_serializer_class_for_model(model_class)
-            serializer = serializer_class(queryset, many=True)
-            user_articles.extend(serializer.data)
+            
+            # Truyền context trong khởi tạo serializer
+            serializer = serializer_class(queryset, many=True, context={'request': self.request})
+            model_data.extend(serializer.data)
 
         # Kiểm tra xem có dữ liệu trong danh sách không
-        if not user_articles:
-            return Response({'status': status.HTTP_200_OK, 'message': 'No articles found for the user', 'data': user_articles}, status=status.HTTP_200_OK)
+        if not model_data:
+            return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': model_data}, status=status.HTTP_200_OK)
 
         # Sắp xếp danh sách dựa trên 'Creation_time'
-        sorted_user_articles = sorted(user_articles, key=lambda x: x.get('Creation_time', 0), reverse=True)
+        sorted_data = sorted(model_data, key=lambda x: x.get('Creation_time', 0), reverse=True)
 
-        return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_user_articles}, status=status.HTTP_200_OK)
+        return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_data}, status=status.HTTP_200_OK)
 
 class detaileArticlesAPIView(RetrieveAPIView):
 
-    def get(self, request, *args, **kwargs):
-        artice_id = kwargs.get('artice_id', None)
-        keyForm = kwargs.get('keyForm', None)
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
+            model_data = []
 
-        if not artice_id and keyForm:
-            return Response({'status': status.HTTP_400_BAD_REQUEST, 'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+            artice_id = kwargs.get('artice_id', None)
+            keyForm = kwargs.get('keyForm', None)
 
-        user_articles = []
+            if not artice_id and keyForm:
+                return Response({'status': status.HTTP_400_BAD_REQUEST, 'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
 
-        for model_class in [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]:
-            queryset = model_class.objects.filter(id = artice_id, Category__keyForm=keyForm ).order_by('-Creation_time')
-            serializer_class = get_serializer_class_for_model(model_class)
-            serializer = serializer_class(queryset, many=True)
-            user_articles.extend(serializer.data)
 
-        # Kiểm tra xem có dữ liệu trong danh sách không
-        if not user_articles:
-            return Response({'status': status.HTTP_200_OK, 'message': 'No articles', 'data': user_articles}, status=status.HTTP_200_OK)
+            for model_class in model_classes:
+                queryset = model_class.objects.filter(id = artice_id, Category__keyForm=keyForm )
+                serializer_class = get_serializer_class_for_model(model_class)
+                
+                # Truyền context trong khởi tạo serializer
+                serializer = serializer_class(queryset, many=True, context={'request': self.request})
+                model_data.extend(serializer.data)
 
-        # Sắp xếp danh sách dựa trên 'Creation_time'
-        sorted_user_articles = sorted(user_articles, key=lambda x: x.get('Creation_time', 0), reverse=True)
+            # Kiểm tra xem có dữ liệu trong danh sách không
+            if not model_data:
+                return Response({'status': status.HTTP_404_NOT_FOUND, 'message': 'No articles'}, status=status.HTTP_404_NOT_FOUND)
 
-        return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': sorted_user_articles}, status=status.HTTP_200_OK)
-        
+            return Response({'status': status.HTTP_200_OK, 'message': 'successfully', 'data': model_data}, status=status.HTTP_200_OK)
+    
+        except Http404:
+            data = {'status': status.HTTP_404_NOT_FOUND, 'message': 'Not Found'}
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
 
        
 
