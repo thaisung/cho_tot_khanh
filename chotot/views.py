@@ -407,8 +407,8 @@ class UserArticlesAPIView(ListAPIView):
         model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
         model_data = []
 
-        user_id = request.user.id
-
+        user_id = kwargs.get('user_id', None)
+      
         for model_class in model_classes:
             queryset = model_class.objects.filter(User=user_id).order_by('-Creation_time')
             serializer_class = get_serializer_class_for_model(model_class)
