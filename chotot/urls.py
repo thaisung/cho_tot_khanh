@@ -21,7 +21,7 @@ urlpatterns = [
 
     path('list_home/', Home_ListAPIView.as_view()),
     path('list_home/article_detail/<int:artice_id>/<str:keyForm>/', detaileArticlesAPIView.as_view(), name='article-detail'),
-    path('list_home/user/<int:user_id>/', UserArticlesAPIView.as_view(), name='user-articles'),
+    path('list_home/user/', UserArticlesAPIView.as_view(), name='user-articles'),
 
 
 
