@@ -39,6 +39,21 @@ from B4_do_gia_dung_noi_that.serializers import *
 from B5_cua_hang_viet.models import *
 from B5_cua_hang_viet.serializers import *
 
+from A1_viec_lam.models import Job as ItemsA1
+from A1_viec_lam.serializers import Job_Serializer as A1Items_Serializer
+
+from A2_nha_tot.models import Products as ItemsA2
+from A2_nha_tot.serializers import Products_Serializer as A2Items_Serializer
+
+from A3_tu_lanh_may_lanh_may_giat.models import Items as ItemsA3
+from A3_tu_lanh_may_lanh_may_giat.serializers import Items_Serializer as A3Items_Serializer
+
+from A4_may_moc_thiet_bi_chuyen_dung.models import Items as ItemsA4
+from A4_may_moc_thiet_bi_chuyen_dung.serializers import Items_Serializer as A4Items_Serializer
+
+from A5_taxi.models import Items as ItemsA5
+from A5_taxi.serializers import Items_Serializer as A5Items_Serializer
+
 
 from operator import attrgetter
 
@@ -374,13 +389,23 @@ def get_serializer_class_for_model(model_class):
         return B4Items_Serializer
     elif model_class == ItemsB5:
         return B5Items_Serializer
+    elif model_class == ItemsA1:
+        return A1Items_Serializer
+    elif model_class == ItemsA2:
+        return A2Items_Serializer
+    elif model_class == ItemsA3:
+        return A3Items_Serializer
+    elif model_class == ItemsA4:
+        return A4Items_Serializer
+    elif model_class == ItemsA5:
+        return A5Items_Serializer
     else:
         raise ValueError(f"No serializer found for model {model_class}")
 
 class Home_ListAPIView(ListAPIView):
 
     def list(self, request, *args, **kwargs):
-        model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
+        model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5,ItemsA1,ItemsA2,ItemsA3,ItemsA4,ItemsA5]
         model_data = []
 
         for model_class in model_classes:
@@ -404,7 +429,7 @@ class UserArticlesAPIView(ListAPIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def list(self, request, *args, **kwargs):
-        model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
+        model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5,ItemsA1,ItemsA2,ItemsA3,ItemsA4,ItemsA5]
         model_data = []
 
         user_id = kwargs.get('user_id', None)
@@ -430,7 +455,7 @@ class detaileArticlesAPIView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         try:
-            model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5]
+            model_classes = [ItemsB1, ItemsB2, ItemsB3, ItemsB4, ItemsB5,ItemsA1,ItemsA2,ItemsA3,ItemsA4,ItemsA5]
             model_data = []
 
             artice_id = kwargs.get('artice_id', None)
