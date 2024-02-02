@@ -547,3 +547,44 @@ class detaileArticlesAPIView(RetrieveAPIView):
 #         except Http404:
 #             data = {'status': status.HTTP_404_NOT_FOUND, 'message': 'No content found to delete'}
 #             return Response(data, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+def google_oauth(request):
+    try:
+        # Kiểm tra xác thực bằng token
+        if not request.auth or not IsAuthenticated().has_permission(request, None):
+            raise AuthenticationFailed(detail='Thông tin xác thực không chính xác', code='token_not_valid')
+
+        # Logic của view
+        access_token = request.data["access_token"]
+        data = {'status': status.HTTP_200_OK, 'message': 'Đăng nhập thành công', 'data': {'user':'Đang viết api'}}
+        return Response(data, status=status.HTTP_200_OK)
+    except AuthenticationFailed as e:
+        # Xử lý lỗi xác thực không thành công
+        detail = 'Thông tin xác thực không chính xác' if not e.detail else e.detail
+        data = {'status': status.HTTP_401_UNAUTHORIZED, 'error_message': detail}
+        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as e:
+        data = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': 'Lấy thông tin thất bại'}
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def facebook_oauth(request):
+    try:
+        # Kiểm tra xác thực bằng token
+        if not request.auth or not IsAuthenticated().has_permission(request, None):
+            raise AuthenticationFailed(detail='Thông tin xác thực không chính xác', code='token_not_valid')
+
+        # Logic của view
+        access_token = request.data["access_token"]
+        data = {'status': status.HTTP_200_OK, 'message': 'Đăng nhập thành công', 'data': {'user':'Đang viết api'}}
+        return Response(data, status=status.HTTP_200_OK)
+    except AuthenticationFailed as e:
+        # Xử lý lỗi xác thực không thành công
+        detail = 'Thông tin xác thực không chính xác' if not e.detail else e.detail
+        data = {'status': status.HTTP_401_UNAUTHORIZED, 'error_message': detail}
+        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as e:
+        data = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': 'Lấy thông tin thất bại'}
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)

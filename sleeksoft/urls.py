@@ -46,6 +46,9 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view()),
     path('api/token/blacklist/', TokenBlacklistView.as_view()),
     path('api/user-information/',get_user_info),
+
+    path('api/token/google-oauth/', google_oauth),
+    path('api/token/facebook-oauth/', facebook_oauth),
     
     path('', include('chotot.urls')),
     # path('auth/', include('social_django.urls', namespace='social')),
